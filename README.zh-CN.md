@@ -55,11 +55,11 @@
 参考 `example.env.server` 文件，本地运行时重命名为 `.env.server` 并填写以下配置：
 
 ```env
-# Github Clien ID
+# Github Client ID
 G_CLIENT_ID=
-# Github Clien Secret
+# Github Client Secret
 G_CLIENT_SECRET=
-# JWT Secret, 通常就用 Clien Secret
+# JWT Secret, 通常就用 Client Secret
 JWT_SECRET=
 # 初始化数据库, 首次运行必须设置为 true，之后可以将其关闭
 INIT_TABLE=true
@@ -76,11 +76,11 @@ ENABLE_CACHE=true
 4. 重新部署生效
 
 ### Docker 部署
-对于 Docker 部署，只需要项目根目录 `docker-compose.yaml` 文件，同一目录下执行
+对于 Docker 部署，只需要项目根目录 `docker-compose.yml` 文件，同一目录下执行
 ```
 docker compose up
 ```
-同样可以通过 `docker-compose.yaml` 配置环境变量。
+同样可以通过 `docker-compose.yml` 配置环境变量。
 
 ## 开发
 > [!Note]
