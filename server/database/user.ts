@@ -11,7 +11,7 @@ export class UserTable {
   async init() {
     // Check if we're using MySQL by looking for MySQL environment variables
     const isMySQL = process.env.MYSQL_HOST && process.env.MYSQL_USER && process.env.MYSQL_PASSWORD && process.env.MYSQL_DATABASE
-    
+
     if (isMySQL) {
       // MySQL syntax
       await this.db.prepare(`
@@ -50,7 +50,7 @@ export class UserTable {
     const u = await this.getUser(id)
     const now = Date.now()
     const isMySQL = process.env.MYSQL_HOST && process.env.MYSQL_USER && process.env.MYSQL_PASSWORD && process.env.MYSQL_DATABASE
-    
+
     if (!u) {
       if (isMySQL) {
         // MySQL syntax - use ON DUPLICATE KEY UPDATE
@@ -62,9 +62,11 @@ export class UserTable {
           .run(id, email, "", type, now, now)
       }
       logger.success(`add user ${id}`)
-    } else if (u.email !== email && u.type !== type) {
-      await this.db.prepare(`UPDATE user SET email = ?, updated = ? WHERE id = ?`).run(email, now, id)
-      logger.success(`update user ${id} email`)
+    } else if (u.email !== email || u.type !== type) {
+      await this.db
+        .prepare(`UPDATE user SET email = ?, type = ?, updated = ? WHERE id = ?`)
+        .run(email, type, now, id)
+      logger.success(`update user ${id}`)
     } else {
       logger.info(`user ${id} already exists`)
     }
